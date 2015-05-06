@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using static PcPoradnaReaderWindowsUniversal.TypeHelper;
 
 namespace PcPoradnaReaderWindowsUniversal.Model
 {
@@ -45,19 +46,19 @@ namespace PcPoradnaReaderWindowsUniversal.Model
                         long created = 0;
                         long.TryParse(property.Value.ToString(), out created);
 
-                        question.CreatedOn = TypeHelper.CreateDateTimeFromTicksEpoch(created);
+                        question.CreatedOn = CreateDateTimeFromTicksEpoch(created);
                         break;
 
                     case "sticked":
-                        question.IsSticked = TypeHelper.StringToBool(property.Value.ToString());
+                        question.IsSticked = StringToBool(property.Value.ToString());
                         break;
 
                     case "locked":
-                        question.IsLocked = TypeHelper.StringToBool(property.Value.ToString());
+                        question.IsLocked = StringToBool(property.Value.ToString());
                         break;
 
                     case "deleted":
-                        question.IsDeleted = TypeHelper.StringToBool(property.Value.ToString());
+                        question.IsDeleted = StringToBool(property.Value.ToString());
                         break;
 
                     case "category":

@@ -69,13 +69,13 @@
     <Page.BottomAppBar>
         <CommandBar>
             <AppBarButton Label="Refresh" Icon="Refresh" Click="OnRefreshButtonClickHandler"/>
-            <AppBarButton Label="Help" Icon="Help"/>
             <AppBarButton x:Uid="BottomBarChangeSubDomain" Label="Change subdomain" Icon="Library" Content="Options">
                 <AppBarButton.Flyout>
                     <MenuFlyout x:Name="SubDomainMenuFlyout">
                     </MenuFlyout>
                 </AppBarButton.Flyout>
             </AppBarButton>
+            <AppBarButton Label="Help" Icon="Help"/>
             
             <CommandBar.SecondaryCommands> 
                 <!-- TODO: Implement these buttons -->

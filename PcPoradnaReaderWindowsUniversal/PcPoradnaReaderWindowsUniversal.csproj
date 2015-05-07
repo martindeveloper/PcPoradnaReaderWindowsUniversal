@@ -94,9 +94,11 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Config.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\DataProviderFactory.cs" />
     <Compile Include="Model\IDataProvider.cs" />
     <Compile Include="Model\JsonDataProvider.cs" />
     <Compile Include="Model\Question.cs" />

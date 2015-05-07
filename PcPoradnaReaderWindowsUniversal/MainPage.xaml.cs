@@ -21,21 +21,27 @@ namespace PcPoradnaReaderWindowsUniversal
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        private IDataProvider Provider;
+
         public MainPage()
         {
             this.InitializeComponent();
 
+            Provider = DataProviderFactory.CreateDataProvider(Config.ApiType, Config.LatestQuestionsEndpoint);
             DisplayQuestions();
+        }
+
+        public void HideMainLoader ()
+        {
+            LoaderProgressRing.IsActive = false;
+            LoaderProgressRing.Visibility = Visibility.Collapsed;
         }
 
         private async void DisplayQuestions ()
         {
-            IDataProvider model = new JsonDataProvider(new Uri("http://pc.poradna.net/q/index.json"));
+            IReadOnlyList<Question> questions = await Provider.FetchLatestQuestionsAsync();
 
-            IReadOnlyList<Question> questions = await model.FetchLatestQuestionsAsync();
-
-            loaderProgressRing.IsActive = false;
-            loaderProgressRing.Visibility = Visibility.Collapsed;
+            HideMainLoader();
 
             questionsListView.ItemsSource = questions;
         }

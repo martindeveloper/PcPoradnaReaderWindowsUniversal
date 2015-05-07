@@ -8,13 +8,14 @@ using Windows.UI.Popups;
 using Windows.System;
 using Windows.ApplicationModel.Resources;
 using System.Threading.Tasks;
-using System.Collections.ObjectModel;
 
 namespace PcPoradnaReaderWindowsUniversal
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
+    /// 
+    /// TODO: Refactor whole class
     public sealed partial class MainPage : Page
     {
         private IDataProvider Provider;

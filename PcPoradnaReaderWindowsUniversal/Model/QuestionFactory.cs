@@ -15,8 +15,6 @@ namespace PcPoradnaReaderWindowsUniversal.Model
         {
             Question question = new Question();
 
-            Type boolType = typeof(bool);
-
             foreach (JProperty property in item)
             {
                 switch(property.Name)
@@ -63,6 +61,10 @@ namespace PcPoradnaReaderWindowsUniversal.Model
 
                     case "category":
                         question.Category = property.Value.ToString();
+                        break;
+
+                    case "url_json":
+                        question.RepliesApiUrl = property.Value.ToString();
                         break;
                 }
             }

@@ -26,6 +26,9 @@ namespace PcPoradnaReaderWindowsUniversal.Model
 
         public bool IsDeleted { get; set; } = false;
 
+        // TODO: Move RepliesApiUrl outside of Question entity
+        public string RepliesApiUrl { get; set; }
+
         public IReadOnlyList<Reply> Replies { get; set; }
 
         public override string ToString() => $"{Title} {Author} {Category}";

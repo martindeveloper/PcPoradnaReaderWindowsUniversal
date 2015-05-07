@@ -5,7 +5,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <DataTemplate x:Key="QuestionsListViewItemTemplate">
+    <DataTemplate x:Key="RepliesListViewItemTemplate">
         <StackPanel Orientation="Vertical" VerticalAlignment="Top" Margin="0,10,0,10" Width="Auto">
             <StackPanel Orientation="Horizontal" Width="Auto">
                 <Border Background="#c0392b">
@@ -13,18 +13,11 @@
                 </Border>
 
                 <Border Background="#2C3E50" Margin="5,0,0,0">
-                    <TextBlock Margin="2,2,2,2" Text="{Binding Path=Category}" Style="{ThemeResource CaptionTextBlockStyle}"/>
+                    <TextBlock Margin="2,2,2,2" Text="{Binding Path=CreatedOn}" Style="{ThemeResource CaptionTextBlockStyle}"/>
                 </Border>
             </StackPanel>
 
-            <TextBlock Text="{Binding Path=Title}" Margin="2,5,0,0" Height="42" HorizontalAlignment="Left" TextTrimming="WordEllipsis" TextWrapping="Wrap" Style="{ThemeResource BodyTextBlockStyle}"/>
-            <!--
-            <StackPanel Orientation="Horizontal" Width="Auto" Margin="0,5,0,0">
-                <Viewbox MaxHeight="15" MaxWidth="15" Margin="3,3,3,3">
-                    <SymbolIcon Symbol="ProtectedDocument"/>
-                </Viewbox>
-            </StackPanel>
-            -->
+            <TextBlock Text="{Binding Path=Text}" Margin="2,5,0,0" Height="42" HorizontalAlignment="Left" TextTrimming="WordEllipsis" TextWrapping="Wrap" Style="{ThemeResource BodyTextBlockStyle}"/>
         </StackPanel>
     </DataTemplate>
 </ResourceDictionary>

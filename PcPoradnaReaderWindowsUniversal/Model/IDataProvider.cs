@@ -9,5 +9,7 @@ namespace PcPoradnaReaderWindowsUniversal.Model
     interface IDataProvider
     {
         Task<IReadOnlyList<Question>> FetchLatestQuestionsAsync();
+
+        Task<IReadOnlyList<Reply>> FetchRepliesAsync(Question question);
     }
 }

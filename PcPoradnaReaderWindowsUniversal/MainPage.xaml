@@ -30,7 +30,7 @@
             <ScrollViewer Grid.Column="0" Margin="10,0,0,0" VerticalScrollBarVisibility="Visible">
                 <StackPanel>
                     <TextBlock x:Uid="QuestionsHeader" Style="{ThemeResource TitleTextBlockStyle}" Text="Questions"></TextBlock>
-                    <ListView ItemTemplate="{StaticResource ImageTextLandingNarrowTemplate}" x:Name="questionsListView" Visibility="Visible" Margin="0,0,0,0">
+                    <ListView IsItemClickEnabled="True" ItemTemplate="{StaticResource QuestionsListViewItemTemplate}" x:Name="QuestionsListView" Visibility="Visible" Margin="0,0,0,0">
                         <ListView.ItemContainerStyle>
                             <Style TargetType="ListViewItem">
                                 <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -42,10 +42,23 @@
 
             <ScrollViewer Grid.Column="1" Margin="10,0,0,0">
                 <Grid>
-                    <TextBlock x:Uid="ThreadHeader" Style="{ThemeResource TitleTextBlockStyle}" Text="Thread"></TextBlock>
-                    <TextBlock x:Uid="ThreadSelectInfo" Style="{ThemeResource BaseTextBlockStyle}" Text="Select question to show replies" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    
+                    <TextBlock Grid.Row="0" x:Uid="ThreadHeader" Style="{ThemeResource TitleTextBlockStyle}" Text="Thread"></TextBlock>
+                    <TextBlock x:Uid="ThreadSelectInfo" x:Name="ThreadSelectInfoTextBlock" Style="{ThemeResource BaseTextBlockStyle}" Text="Select question to show replies" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
                     
                     <ProgressRing x:Name="LoaderThreadReplies" Height="80" Width="80" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" Margin="117,0" IsActive="False" Visibility="Collapsed"/>
+                    
+                    <ListView Grid.Row="1" ItemTemplate="{StaticResource RepliesListViewItemTemplate}" IsItemClickEnabled="False" x:Name="ThreadRepliesListView" Visibility="Collapsed" Margin="0,0,0,0">
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                    </ListView>
                 </Grid>
             </ScrollViewer>
         </Grid>

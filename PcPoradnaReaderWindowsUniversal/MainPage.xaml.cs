@@ -13,6 +13,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using PcPoradnaReaderWindowsUniversal.Model;
+using Windows.UI.Popups;
 
 namespace PcPoradnaReaderWindowsUniversal
 {
@@ -22,28 +23,63 @@ namespace PcPoradnaReaderWindowsUniversal
     public sealed partial class MainPage : Page
     {
         private IDataProvider Provider;
+        private Question ActiveQuestion;
 
         public MainPage()
         {
             this.InitializeComponent();
 
             Provider = DataProviderFactory.CreateDataProvider(Config.ApiType, Config.LatestQuestionsEndpoint);
+
+            RegisterClickOnQuestionEvent();
             DisplayQuestions();
         }
 
-        public void HideMainLoader ()
+        private void RegisterClickOnQuestionEvent()
         {
-            LoaderProgressRing.IsActive = false;
-            LoaderProgressRing.Visibility = Visibility.Collapsed;
+            QuestionsListView.ItemClick += async (object sender, ItemClickEventArgs args) => {
+                ActiveQuestion = args.ClickedItem as Question;
+
+                if(ActiveQuestion != null)
+                {
+                    // Hide info text block
+                    ThreadSelectInfoTextBlock.Visibility = Visibility.Collapsed;
+
+                    ToggleRepliesLoader();
+
+                    await Provider.FetchRepliesAsync(ActiveQuestion);
+
+                    ToggleRepliesLoader();
+
+                    ThreadRepliesListView.Visibility = Visibility.Visible;
+                    ThreadRepliesListView.ItemsSource = ActiveQuestion.Replies;
+                }
+            };
+        }
+
+        private void ToggleProgressRing(ProgressRing loader)
+        {
+            loader.IsActive = !loader.IsActive;
+            loader.Visibility = (loader.Visibility == Visibility.Collapsed) ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        public void ToggleRepliesLoader()
+        {
+            ToggleProgressRing(LoaderThreadReplies);
+        }
+
+        public void ToggleMainLoader ()
+        {
+            ToggleProgressRing(LoaderProgressRing);
         }
 
         private async void DisplayQuestions ()
         {
             IReadOnlyList<Question> questions = await Provider.FetchLatestQuestionsAsync();
 
-            HideMainLoader();
+            ToggleMainLoader();
 
-            questionsListView.ItemsSource = questions;
+            QuestionsListView.ItemsSource = questions;
         }
     }
 }

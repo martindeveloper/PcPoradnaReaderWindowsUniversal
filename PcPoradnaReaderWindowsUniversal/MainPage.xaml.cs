@@ -8,6 +8,7 @@ using Windows.UI.Popups;
 using Windows.System;
 using Windows.ApplicationModel.Resources;
 using System.Threading.Tasks;
+using PcPoradnaReaderWindowsUniversal.ExtensionMethods;
 
 namespace PcPoradnaReaderWindowsUniversal
 {
@@ -101,7 +102,7 @@ namespace PcPoradnaReaderWindowsUniversal
 
             if (ActiveQuestion != null)
             {
-                // TODO: Refactor
+                // TODO: Refactor code for showing and hiding particular parts of UI
 
                 // Show question
                 ThreadQuestionTextBlock.Visibility = Visibility.Visible;
@@ -117,36 +118,24 @@ namespace PcPoradnaReaderWindowsUniversal
             }
         }
 
-        private void ShowProgressRing(ProgressRing loader)
-        {
-            loader.IsActive = true;
-            loader.Visibility = Visibility.Visible;
-        }
-
-        private void HideProgressRing(ProgressRing loader)
-        {
-            loader.IsActive = false;
-            loader.Visibility = Visibility.Collapsed;
-        }
-
         private async void RefreshQuestions()
         {
-            ShowProgressRing(LoaderProgressRing);
+            LoaderProgressRing.ShowProgressRing();
 
             IReadOnlyList<Question> questions = await Provider.FetchLatestQuestionsAsync();
             QuestionsListView.ItemsSource = questions.Where(question => !question.IsDeleted);
 
-            HideProgressRing(LoaderProgressRing);
+            LoaderProgressRing.HideProgressRing();
         }
 
         private async Task RefreshReplies()
         {
-            ShowProgressRing(LoaderThreadReplies);
+            LoaderThreadReplies.ShowProgressRing();
 
             await Provider.FetchRepliesAsync(ActiveQuestion);
             ThreadRepliesListView.ItemsSource = ActiveQuestion.Replies.Where(reply => !reply.IsDeleted).OrderByDescending(reply => reply.CreatedOn);
 
-            HideProgressRing(LoaderThreadReplies);
+            LoaderThreadReplies.HideProgressRing();
         }
     }
 }

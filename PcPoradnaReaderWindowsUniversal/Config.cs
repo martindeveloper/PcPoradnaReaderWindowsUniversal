@@ -26,6 +26,6 @@ namespace PcPoradnaReaderWindowsUniversal
 
         public static string LatestQuestionsEndpoint { get { return $"http://{ActiveSubDomain}.poradna.net/q/index.json"; } }
 
-        public static EndpointSubDomain ActiveSubDomain { get; set; } = new EndpointSubDomain() { SubDomain = "pc", Title = "PC" };
+        public static EndpointSubDomain ActiveSubDomain { get; set; } = Model.SubDomainsHelper.DefaultSubDomain;
     }
 }

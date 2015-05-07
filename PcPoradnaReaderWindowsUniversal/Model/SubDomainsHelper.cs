@@ -22,5 +22,13 @@ namespace PcPoradnaReaderWindowsUniversal.Model
                 return new ReadOnlyCollection<EndpointSubDomain>(SubDomains);
             }
         }
+
+        public static EndpointSubDomain DefaultSubDomain
+        {
+            get
+            {
+                return SubDomains[0];
+            }
+        }
     }
 }

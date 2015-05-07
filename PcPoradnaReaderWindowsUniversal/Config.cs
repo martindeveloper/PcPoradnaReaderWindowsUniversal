@@ -13,8 +13,8 @@ namespace PcPoradnaReaderWindowsUniversal
 
     class Config
     {
-        public EndpointType ApiTyp { get; } = EndpointType.JSON;
+        public static EndpointType ApiType { get; } = EndpointType.JSON;
 
-        public string LatestQuestionsEndpoint { get; } = "http://pc.poradna.net/q/index.json";
+        public static string LatestQuestionsEndpoint { get; } = "http://pc.poradna.net/q/index.json";
     }
 }

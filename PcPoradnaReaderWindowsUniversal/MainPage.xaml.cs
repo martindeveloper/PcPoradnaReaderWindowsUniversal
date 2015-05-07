@@ -7,6 +7,7 @@ using PcPoradnaReaderWindowsUniversal.Model;
 using Windows.UI.Popups;
 using Windows.System;
 using Windows.ApplicationModel.Resources;
+using System.Threading.Tasks;
 
 namespace PcPoradnaReaderWindowsUniversal
 {
@@ -25,85 +26,90 @@ namespace PcPoradnaReaderWindowsUniversal
 
             Resource = new ResourceLoader();
             Provider = DataProviderFactory.CreateDataProvider(Config.ApiType, Config.LatestQuestionsEndpoint);
-
-            RegisterClickOnQuestionEvent();
-            RegisterClickOnReplyEvent();
-
-            DisplayQuestions();
+            
+            RefreshQuestions();
         }
 
-        private void RegisterClickOnReplyEvent()
+        private async void OnRefreshButtonClickHandler (object sender, RoutedEventArgs args)
         {
-            ThreadRepliesListView.ItemClick += async (object sender, ItemClickEventArgs args) => {
-                Reply reply = args.ClickedItem as Reply;
+            RefreshQuestions();
 
-                if(reply != null)
-                {
-                    MessageDialog dialog = new MessageDialog(Resource.GetString("OpenInBrowserText"), Resource.GetString("OpenInBrowserHeadline"));
-
-                    dialog.Commands.Add(new UICommand(Resource.GetString("Yes"), async (IUICommand target) => {
-                        await Launcher.LaunchUriAsync(reply.WebUrl);
-                    }));
-
-                    dialog.Commands.Add(new UICommand(Resource.GetString("Close")));
-
-                    IUICommand command = await dialog.ShowAsync();
-                }
-            };
+            if(ActiveQuestion != null)
+            {
+                await RefreshReplies();
+            }
         }
 
-        private void RegisterClickOnQuestionEvent()
+        private async void OnReplyClickHandler(object sender, ItemClickEventArgs args)
         {
-            QuestionsListView.ItemClick += async (object sender, ItemClickEventArgs args) => {
-                ActiveQuestion = args.ClickedItem as Question;
+            Reply reply = args.ClickedItem as Reply;
 
-                if(ActiveQuestion != null)
-                {
-                    // TODO: Refactor
+            if (reply != null)
+            {
+                MessageDialog dialog = new MessageDialog(Resource.GetString("OpenInBrowserText"), Resource.GetString("OpenInBrowserHeadline"));
 
-                    // Show question
-                    ThreadQuestionTextBlock.Visibility = Visibility.Visible;
-                    ThreadQuestionTextBlock.Text = ActiveQuestion.Text;
+                dialog.Commands.Add(new UICommand(Resource.GetString("Yes"), async (IUICommand target) => {
+                    await Launcher.LaunchUriAsync(reply.WebUrl);
+                }));
 
-                    // Hide info text block
-                    ThreadSelectInfoTextBlock.Visibility = Visibility.Collapsed;
-                    ThreadRepliesListView.Visibility = Visibility.Collapsed;
+                dialog.Commands.Add(new UICommand(Resource.GetString("Close")));
 
-                    ToggleRepliesLoader();
-
-                    await Provider.FetchRepliesAsync(ActiveQuestion);
-
-                    ToggleRepliesLoader();
-
-                    ThreadRepliesListView.Visibility = Visibility.Visible;
-                    ThreadRepliesListView.ItemsSource = ActiveQuestion.Replies.OrderByDescending(reply => reply.CreatedOn);
-                }
-            };
+                IUICommand command = await dialog.ShowAsync();
+            }
         }
 
-        private void ToggleProgressRing(ProgressRing loader)
+        private async void OnQuestionClickHandler (object sender, ItemClickEventArgs args)
         {
-            loader.IsActive = !loader.IsActive;
-            loader.Visibility = (loader.Visibility == Visibility.Collapsed) ? Visibility.Visible : Visibility.Collapsed;
+            ActiveQuestion = args.ClickedItem as Question;
+
+            if (ActiveQuestion != null)
+            {
+                // TODO: Refactor
+
+                // Show question
+                ThreadQuestionTextBlock.Visibility = Visibility.Visible;
+                ThreadQuestionTextBlock.Text = ActiveQuestion.Text;
+
+                // Hide info text block
+                ThreadSelectInfoTextBlock.Visibility = Visibility.Collapsed;
+                ThreadRepliesListView.Visibility = Visibility.Collapsed;
+
+                await RefreshReplies();
+
+                ThreadRepliesListView.Visibility = Visibility.Visible;
+            }
         }
 
-        public void ToggleRepliesLoader()
+        private void ShowProgressRing(ProgressRing loader)
         {
-            ToggleProgressRing(LoaderThreadReplies);
+            loader.IsActive = true;
+            loader.Visibility = Visibility.Visible;
         }
 
-        public void ToggleMainLoader ()
+        private void HideProgressRing(ProgressRing loader)
         {
-            ToggleProgressRing(LoaderProgressRing);
+            loader.IsActive = false;
+            loader.Visibility = Visibility.Collapsed;
         }
 
-        private async void DisplayQuestions ()
+        private async void RefreshQuestions ()
         {
+            ShowProgressRing(LoaderProgressRing);
+
             IReadOnlyList<Question> questions = await Provider.FetchLatestQuestionsAsync();
-
-            ToggleMainLoader();
-
             QuestionsListView.ItemsSource = questions;
+
+            HideProgressRing(LoaderProgressRing);
+        }
+
+        private async Task RefreshReplies ()
+        {
+            ShowProgressRing(LoaderThreadReplies);
+
+            await Provider.FetchRepliesAsync(ActiveQuestion);
+            ThreadRepliesListView.ItemsSource = ActiveQuestion.Replies.OrderByDescending(reply => reply.CreatedOn);
+
+            HideProgressRing(LoaderThreadReplies);
         }
     }
 }

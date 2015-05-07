@@ -30,7 +30,7 @@
             <ScrollViewer Grid.Column="0" Margin="10,0,0,0" VerticalScrollBarVisibility="Visible">
                 <StackPanel>
                     <TextBlock x:Uid="QuestionsHeader" Style="{ThemeResource TitleTextBlockStyle}" Text="Questions"></TextBlock>
-                    <ListView IsItemClickEnabled="True" ItemTemplate="{StaticResource QuestionsListViewItemTemplate}" x:Name="QuestionsListView" Visibility="Visible" Margin="0,0,0,0">
+                    <ListView IsItemClickEnabled="True" ItemTemplate="{StaticResource QuestionsListViewItemTemplate}" x:Name="QuestionsListView" Visibility="Visible" Margin="0,0,0,0" ItemClick="OnQuestionClickHandler">
                         <ListView.ItemContainerStyle>
                             <Style TargetType="ListViewItem">
                                 <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -47,15 +47,15 @@
                         <RowDefinition Height="*"></RowDefinition>
                         <RowDefinition Height="10*"></RowDefinition>
                     </Grid.RowDefinitions>
-                    
+
                     <TextBlock Grid.Row="0" x:Uid="ThreadHeader" Style="{ThemeResource TitleTextBlockStyle}" Text="Thread"></TextBlock>
                     <TextBlock Grid.Row="1" x:Name="ThreadQuestionTextBlock" Style="{ThemeResource BaseTextBlockStyle}" Text="Text details" Margin="0,5,0,10" Visibility="Collapsed"></TextBlock>
-                    
+
                     <TextBlock Grid.Row="2" x:Uid="ThreadSelectInfo" x:Name="ThreadSelectInfoTextBlock" Style="{ThemeResource BaseTextBlockStyle}" Text="Select question to show replies" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
-                    
+
                     <ProgressRing Grid.Row="2" x:Name="LoaderThreadReplies" Height="80" Width="80" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" Margin="117,0" IsActive="False" Visibility="Collapsed"/>
-                    
-                    <ListView Grid.Row="2" ItemTemplate="{StaticResource RepliesListViewItemTemplate}" IsItemClickEnabled="True" x:Name="ThreadRepliesListView" Visibility="Collapsed" Margin="0,0,0,0">
+
+                    <ListView Grid.Row="2" ItemTemplate="{StaticResource RepliesListViewItemTemplate}" IsItemClickEnabled="True" x:Name="ThreadRepliesListView" Visibility="Collapsed" Margin="0,0,0,0" ItemClick="OnReplyClickHandler">
                         <ListView.ItemContainerStyle>
                             <Style TargetType="ListViewItem">
                                 <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -66,4 +66,18 @@
             </ScrollViewer>
         </Grid>
     </Grid>
+
+    <Page.BottomAppBar>
+        <CommandBar>
+            <AppBarButton Label="Refresh" Icon="Refresh" Click="OnRefreshButtonClickHandler"/>
+            <AppBarButton Label="Help" Icon="Help"/>
+
+            <CommandBar.SecondaryCommands>
+                <!-- TODO: Implement these buttons -->
+                <AppBarButton Label="Login" /> 
+                <AppBarButton Label="Logout" />
+                <AppBarButton Label="About"/>
+            </CommandBar.SecondaryCommands>
+        </CommandBar>
+    </Page.BottomAppBar>
 </Page>

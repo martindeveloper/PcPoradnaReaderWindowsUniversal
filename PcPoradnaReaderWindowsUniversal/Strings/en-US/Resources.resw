@@ -126,4 +126,7 @@
   <data name="ThreadHeader.Text" xml:space="preserve">
     <value>Replies</value>
   </data>
+  <data name="ThreadSelectInfo.Text" xml:space="preserve">
+    <value>Select question to show replies</value>
+  </data>
 </root>

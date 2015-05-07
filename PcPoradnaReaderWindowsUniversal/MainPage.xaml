@@ -43,7 +43,9 @@
             <ScrollViewer Grid.Column="1" Margin="10,0,0,0">
                 <Grid>
                     <TextBlock x:Uid="ThreadHeader" Style="{ThemeResource TitleTextBlockStyle}" Text="Thread"></TextBlock>
-                    <ProgressRing x:Name="LoaderThreadReplies" Height="80" Width="80" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" IsActive="True" Margin="117,0"/>
+                    <TextBlock x:Uid="ThreadSelectInfo" Style="{ThemeResource BaseTextBlockStyle}" Text="Select question to show replies" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                    
+                    <ProgressRing x:Name="LoaderThreadReplies" Height="80" Width="80" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" Margin="117,0" IsActive="False" Visibility="Collapsed"/>
                 </Grid>
             </ScrollViewer>
         </Grid>

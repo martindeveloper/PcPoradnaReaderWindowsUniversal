@@ -10,6 +10,7 @@ namespace PcPoradnaReaderWindowsUniversal.Model
     {
         public int Id { get; set; }
 
+        // TODO: Fill this property
         public Reply Parent { get; set; }
 
         public Uri WebUrl { get; set; }

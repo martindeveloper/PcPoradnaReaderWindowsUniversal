@@ -16,7 +16,6 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-
         <ProgressRing Grid.Column="0" Grid.Row="1" x:Name="LoaderProgressRing" Height="100" Width="100" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" IsActive="True" Margin="117,0"/>
 
         <TextBlock x:Uid="ApplicationHeader" Grid.Column="0" Grid.Row="0" Style="{ThemeResource HeaderTextBlockStyle}" x:Name="ApplicationHeader" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="PC Poradna Reader" VerticalAlignment="Top"/>
@@ -71,12 +70,18 @@
         <CommandBar>
             <AppBarButton Label="Refresh" Icon="Refresh" Click="OnRefreshButtonClickHandler"/>
             <AppBarButton Label="Help" Icon="Help"/>
-
-            <CommandBar.SecondaryCommands>
+            <AppBarButton x:Uid="BottomBarChangeSubDomain" Label="Change subdomain" Icon="Library" Content="Options">
+                <AppBarButton.Flyout>
+                    <MenuFlyout x:Name="SubDomainMenuFlyout">
+                    </MenuFlyout>
+                </AppBarButton.Flyout>
+            </AppBarButton>
+            
+            <CommandBar.SecondaryCommands> 
                 <!-- TODO: Implement these buttons -->
-                <AppBarButton Label="Login" /> 
-                <AppBarButton Label="Logout" />
-                <AppBarButton Label="About"/>
+                <AppBarButton x:Uid="BottomBarLoginButton" Label="Login" /> 
+                <AppBarButton x:Uid="BottomBarLogoutButton" Label="Logout" />
+                <AppBarButton x:Uid="BottomBarAboutButton" Label="About"/>
             </CommandBar.SecondaryCommands>
         </CommandBar>
     </Page.BottomAppBar>

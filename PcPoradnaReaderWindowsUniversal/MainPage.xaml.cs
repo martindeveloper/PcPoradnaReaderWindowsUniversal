@@ -8,6 +8,7 @@ using Windows.UI.Popups;
 using Windows.System;
 using Windows.ApplicationModel.Resources;
 using System.Threading.Tasks;
+using System.Collections.ObjectModel;
 
 namespace PcPoradnaReaderWindowsUniversal
 {
@@ -26,15 +27,49 @@ namespace PcPoradnaReaderWindowsUniversal
 
             Resource = new ResourceLoader();
             Provider = DataProviderFactory.CreateDataProvider(Config.ApiType, Config.LatestQuestionsEndpoint);
-            
+
+            CreateSubDomainsMenuFlyout();
             RefreshQuestions();
         }
 
-        private async void OnRefreshButtonClickHandler (object sender, RoutedEventArgs args)
+        private void CreateSubDomainsMenuFlyout()
+        {
+            IReadOnlyList<EndpointSubDomain> domains = SubDomainsHelper.AvailableSubDomains;
+
+            foreach(EndpointSubDomain subdomain in domains)
+            {
+                EndpointSubDomain scopedSubdomain = subdomain;
+
+                MenuFlyoutItem item = new MenuFlyoutItem() { Text = subdomain.Title };
+                item.Click += (object sender, RoutedEventArgs args) => { ChangeSubDomain(scopedSubdomain); };
+
+                SubDomainMenuFlyout.Items.Add(item);
+            }
+        }
+
+        private void ChangeSubDomain(EndpointSubDomain subdomain)
+        {
+            // TODO: Refactor this, Im not proud of this
+            Config.ActiveSubDomain = subdomain;
+            Provider = DataProviderFactory.CreateDataProvider(Config.ApiType, Config.LatestQuestionsEndpoint);
+
+            // Hide question
+            ThreadQuestionTextBlock.Visibility = Visibility.Collapsed;
+
+            // Show info text block
+            ThreadSelectInfoTextBlock.Visibility = Visibility.Visible;
+
+            // Hide thread
+            ThreadRepliesListView.Visibility = Visibility.Collapsed;
+
+            RefreshQuestions();
+        }
+
+        private async void OnRefreshButtonClickHandler(object sender, RoutedEventArgs args)
         {
             RefreshQuestions();
 
-            if(ActiveQuestion != null)
+            if (ActiveQuestion != null)
             {
                 await RefreshReplies();
             }
@@ -48,7 +83,8 @@ namespace PcPoradnaReaderWindowsUniversal
             {
                 MessageDialog dialog = new MessageDialog(Resource.GetString("OpenInBrowserText"), Resource.GetString("OpenInBrowserHeadline"));
 
-                dialog.Commands.Add(new UICommand(Resource.GetString("Yes"), async (IUICommand target) => {
+                dialog.Commands.Add(new UICommand(Resource.GetString("Yes"), async (IUICommand target) =>
+                {
                     await Launcher.LaunchUriAsync(reply.WebUrl);
                 }));
 
@@ -58,7 +94,7 @@ namespace PcPoradnaReaderWindowsUniversal
             }
         }
 
-        private async void OnQuestionClickHandler (object sender, ItemClickEventArgs args)
+        private async void OnQuestionClickHandler(object sender, ItemClickEventArgs args)
         {
             ActiveQuestion = args.ClickedItem as Question;
 
@@ -92,22 +128,22 @@ namespace PcPoradnaReaderWindowsUniversal
             loader.Visibility = Visibility.Collapsed;
         }
 
-        private async void RefreshQuestions ()
+        private async void RefreshQuestions()
         {
             ShowProgressRing(LoaderProgressRing);
 
             IReadOnlyList<Question> questions = await Provider.FetchLatestQuestionsAsync();
-            QuestionsListView.ItemsSource = questions;
+            QuestionsListView.ItemsSource = questions.Where(question => !question.IsDeleted);
 
             HideProgressRing(LoaderProgressRing);
         }
 
-        private async Task RefreshReplies ()
+        private async Task RefreshReplies()
         {
             ShowProgressRing(LoaderThreadReplies);
 
             await Provider.FetchRepliesAsync(ActiveQuestion);
-            ThreadRepliesListView.ItemsSource = ActiveQuestion.Replies.OrderByDescending(reply => reply.CreatedOn);
+            ThreadRepliesListView.ItemsSource = ActiveQuestion.Replies.Where(reply => !reply.IsDeleted).OrderByDescending(reply => reply.CreatedOn);
 
             HideProgressRing(LoaderThreadReplies);
         }

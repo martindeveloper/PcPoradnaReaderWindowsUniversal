@@ -44,6 +44,7 @@ namespace PcPoradnaReaderWindowsUniversal
                 {
                     // Hide info text block
                     ThreadSelectInfoTextBlock.Visibility = Visibility.Collapsed;
+                    ThreadRepliesListView.Visibility = Visibility.Collapsed;
 
                     ToggleRepliesLoader();
 

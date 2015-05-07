@@ -17,9 +17,9 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <ProgressRing Grid.Column="0" Grid.Row="1" x:Name="loaderProgressRing" Height="100" Width="100" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" IsActive="True" Margin="117,0"/>
+        <ProgressRing Grid.Column="0" Grid.Row="1" x:Name="LoaderProgressRing" Height="100" Width="100" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" IsActive="True" Margin="117,0"/>
 
-        <TextBlock x:Uid="ApplicationHeader" Grid.Column="0" Grid.Row="0" Style="{ThemeResource HeaderTextBlockStyle}" x:Name="textBlock" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="PC Poradna Reader" VerticalAlignment="Top"/>
+        <TextBlock x:Uid="ApplicationHeader" Grid.Column="0" Grid.Row="0" Style="{ThemeResource HeaderTextBlockStyle}" x:Name="ApplicationHeader" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="PC Poradna Reader" VerticalAlignment="Top"/>
 
         <Grid Grid.Column="0" Grid.Row="1" Margin="0,20,0,0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
             <Grid.ColumnDefinitions>
@@ -41,7 +41,10 @@
             </ScrollViewer>
 
             <ScrollViewer Grid.Column="1" Margin="10,0,0,0">
-                <TextBlock x:Uid="ThreadHeader" Style="{ThemeResource TitleTextBlockStyle}" Text="Thread"></TextBlock>
+                <Grid>
+                    <TextBlock x:Uid="ThreadHeader" Style="{ThemeResource TitleTextBlockStyle}" Text="Thread"></TextBlock>
+                    <ProgressRing x:Name="LoaderThreadReplies" Height="80" Width="80" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" IsActive="True" Margin="117,0"/>
+                </Grid>
             </ScrollViewer>
         </Grid>
     </Grid>

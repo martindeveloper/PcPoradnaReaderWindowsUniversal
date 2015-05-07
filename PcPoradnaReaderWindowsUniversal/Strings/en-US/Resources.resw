@@ -120,6 +120,15 @@
   <data name="ApplicationHeader.Text" xml:space="preserve">
     <value>PC Poradna Reader</value>
   </data>
+  <data name="Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="OpenInBrowserHeadline" xml:space="preserve">
+    <value>Open in browser</value>
+  </data>
+  <data name="OpenInBrowserText" xml:space="preserve">
+    <value>Would you like to open web browser on this reply?</value>
+  </data>
   <data name="QuestionsHeader.Text" xml:space="preserve">
     <value>Questions</value>
   </data>
@@ -128,5 +137,8 @@
   </data>
   <data name="ThreadSelectInfo.Text" xml:space="preserve">
     <value>Select question to show replies</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Yes</value>
   </data>
 </root>

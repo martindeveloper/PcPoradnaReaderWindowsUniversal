@@ -1,19 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 using PcPoradnaReaderWindowsUniversal.Model;
 using Windows.UI.Popups;
+using Windows.System;
+using Windows.ApplicationModel.Resources;
 
 namespace PcPoradnaReaderWindowsUniversal
 {
@@ -24,15 +17,39 @@ namespace PcPoradnaReaderWindowsUniversal
     {
         private IDataProvider Provider;
         private Question ActiveQuestion;
+        private ResourceLoader Resource;
 
         public MainPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
 
+            Resource = new ResourceLoader();
             Provider = DataProviderFactory.CreateDataProvider(Config.ApiType, Config.LatestQuestionsEndpoint);
 
             RegisterClickOnQuestionEvent();
+            RegisterClickOnReplyEvent();
+
             DisplayQuestions();
+        }
+
+        private void RegisterClickOnReplyEvent()
+        {
+            ThreadRepliesListView.ItemClick += async (object sender, ItemClickEventArgs args) => {
+                Reply reply = args.ClickedItem as Reply;
+
+                if(reply != null)
+                {
+                    MessageDialog dialog = new MessageDialog(Resource.GetString("OpenInBrowserText"), Resource.GetString("OpenInBrowserHeadline"));
+
+                    dialog.Commands.Add(new UICommand(Resource.GetString("Yes"), async (IUICommand target) => {
+                        await Launcher.LaunchUriAsync(reply.WebUrl);
+                    }));
+
+                    dialog.Commands.Add(new UICommand(Resource.GetString("Close")));
+
+                    IUICommand command = await dialog.ShowAsync();
+                }
+            };
         }
 
         private void RegisterClickOnQuestionEvent()
@@ -42,6 +59,12 @@ namespace PcPoradnaReaderWindowsUniversal
 
                 if(ActiveQuestion != null)
                 {
+                    // TODO: Refactor
+
+                    // Show question
+                    ThreadQuestionTextBlock.Visibility = Visibility.Visible;
+                    ThreadQuestionTextBlock.Text = ActiveQuestion.Text;
+
                     // Hide info text block
                     ThreadSelectInfoTextBlock.Visibility = Visibility.Collapsed;
                     ThreadRepliesListView.Visibility = Visibility.Collapsed;
@@ -53,7 +76,7 @@ namespace PcPoradnaReaderWindowsUniversal
                     ToggleRepliesLoader();
 
                     ThreadRepliesListView.Visibility = Visibility.Visible;
-                    ThreadRepliesListView.ItemsSource = ActiveQuestion.Replies;
+                    ThreadRepliesListView.ItemsSource = ActiveQuestion.Replies.OrderByDescending(reply => reply.CreatedOn);
                 }
             };
         }

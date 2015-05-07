@@ -44,15 +44,18 @@
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
                         <RowDefinition Height="10*"></RowDefinition>
                     </Grid.RowDefinitions>
                     
                     <TextBlock Grid.Row="0" x:Uid="ThreadHeader" Style="{ThemeResource TitleTextBlockStyle}" Text="Thread"></TextBlock>
-                    <TextBlock Grid.Row="1" x:Uid="ThreadSelectInfo" x:Name="ThreadSelectInfoTextBlock" Style="{ThemeResource BaseTextBlockStyle}" Text="Select question to show replies" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                    <TextBlock Grid.Row="1" x:Name="ThreadQuestionTextBlock" Style="{ThemeResource BaseTextBlockStyle}" Text="Text details" Margin="0,5,0,10" Visibility="Collapsed"></TextBlock>
                     
-                    <ProgressRing Grid.Row="1" x:Name="LoaderThreadReplies" Height="80" Width="80" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" Margin="117,0" IsActive="False" Visibility="Collapsed"/>
+                    <TextBlock Grid.Row="2" x:Uid="ThreadSelectInfo" x:Name="ThreadSelectInfoTextBlock" Style="{ThemeResource BaseTextBlockStyle}" Text="Select question to show replies" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
                     
-                    <ListView Grid.Row="1" ItemTemplate="{StaticResource RepliesListViewItemTemplate}" IsItemClickEnabled="False" x:Name="ThreadRepliesListView" Visibility="Collapsed" Margin="0,0,0,0">
+                    <ProgressRing Grid.Row="2" x:Name="LoaderThreadReplies" Height="80" Width="80" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" Margin="117,0" IsActive="False" Visibility="Collapsed"/>
+                    
+                    <ListView Grid.Row="2" ItemTemplate="{StaticResource RepliesListViewItemTemplate}" IsItemClickEnabled="True" x:Name="ThreadRepliesListView" Visibility="Collapsed" Margin="0,0,0,0">
                         <ListView.ItemContainerStyle>
                             <Style TargetType="ListViewItem">
                                 <Setter Property="HorizontalContentAlignment" Value="Stretch" />

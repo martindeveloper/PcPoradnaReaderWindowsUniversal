@@ -25,6 +25,10 @@ namespace PcPoradnaReaderWindowsUniversal.Model
                         reply.Id = id;
                         break;
 
+                    case "url":
+                        reply.WebUrl = new Uri(property.Value.ToString());
+                        break;
+
                     case "title":
                         reply.Title = property.Value.ToString();
                         break;

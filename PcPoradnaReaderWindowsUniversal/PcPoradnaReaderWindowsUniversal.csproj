@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <ProjectGuid>{2EA0BD27-FBEE-46D7-857A-C0007F064040}</ProjectGuid>
+    <ProjectGuid>{3A00639E-C16B-41E5-8212-95B9EB27D350}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>PcPoradnaReaderWindowsUniversal</RootNamespace>

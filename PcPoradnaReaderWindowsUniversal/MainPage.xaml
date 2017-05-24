@@ -68,6 +68,12 @@
 
     <Page.BottomAppBar>
         <CommandBar>
+            <AppBarButton Label="Change category" Icon="Folder">
+                <AppBarButton.Flyout>
+                    <MenuFlyout x:Name="CategoriesMenuFlyout">
+                    </MenuFlyout>
+                </AppBarButton.Flyout>
+            </AppBarButton>
             <AppBarButton Label="Refresh" Icon="Refresh" Click="OnRefreshButtonClickHandler"/>
             <AppBarButton x:Uid="BottomBarChangeSubDomain" Label="Change subdomain" Icon="Library" Content="Options">
                 <AppBarButton.Flyout>

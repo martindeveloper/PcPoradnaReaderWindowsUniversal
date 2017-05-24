@@ -22,6 +22,7 @@ namespace PcPoradnaReaderWindowsUniversal
         private IDataProvider Provider;
         private Question ActiveQuestion;
         private ResourceLoader Resource;
+        private Model.Categories.ISubDomainCategories AvailableCategories;
 
         public MainPage()
         {
@@ -30,14 +31,29 @@ namespace PcPoradnaReaderWindowsUniversal
             Resource = new ResourceLoader();
             Provider = DataProviderFactory.CreateDataProvider(Config.ApiType, Config.LatestQuestionsEndpoint);
 
-            CreateSubDomainsMenuFlyout();
-            RefreshQuestions();
+            ChangeSubDomain(Config.ActiveSubDomain);
+
+            FillSubDomainsMenuFlyout(SubDomainsHelper.AvailableSubDomains);
+            FillCategoriesMenuFlyout(Config.ActiveSubDomain);
         }
 
-        private void CreateSubDomainsMenuFlyout()
+        private void FillCategoriesMenuFlyout(EndpointSubDomain subdomain)
         {
-            IReadOnlyList<EndpointSubDomain> domains = SubDomainsHelper.AvailableSubDomains;
+            IList<Model.Categories.Category> categories = AvailableCategories.ToList();
 
+            foreach (Model.Categories.Category category in categories)
+            {
+                Model.Categories.Category scopedCategory = category;
+
+                MenuFlyoutItem item = new MenuFlyoutItem() { Text = scopedCategory.Name };
+                item.Click += (object sender, RoutedEventArgs args) => { ChangeCategory(scopedCategory); };
+
+                CategoriesMenuFlyout.Items.Add(item);
+            }
+        }
+
+        private void FillSubDomainsMenuFlyout(IReadOnlyList<EndpointSubDomain> domains)
+        {
             foreach(EndpointSubDomain subdomain in domains)
             {
                 EndpointSubDomain scopedSubdomain = subdomain;
@@ -49,11 +65,22 @@ namespace PcPoradnaReaderWindowsUniversal
             }
         }
 
+        private void ChangeCategory(Model.Categories.Category category)
+        {
+            Provider.SetCategory(category);
+
+            RefreshQuestions();
+        }
+
         private void ChangeSubDomain(EndpointSubDomain subdomain)
         {
             // TODO: Refactor this, Im not proud of this
             Config.ActiveSubDomain = subdomain;
             Provider = DataProviderFactory.CreateDataProvider(Config.ApiType, Config.LatestQuestionsEndpoint);
+
+            // Categories
+            Model.Categories.SubdomainCategoriesFactory categoriesFactory = new Model.Categories.SubdomainCategoriesFactory();
+            AvailableCategories = categoriesFactory.GetCategories(subdomain);
 
             // Hide question
             ThreadQuestionTextBlock.Visibility = Visibility.Collapsed;
@@ -65,6 +92,26 @@ namespace PcPoradnaReaderWindowsUniversal
             ThreadRepliesListView.Visibility = Visibility.Collapsed;
 
             RefreshQuestions();
+        }
+
+        private async void RefreshQuestions()
+        {
+            LoaderProgressRing.ShowProgressRing();
+
+            IReadOnlyList<Question> questions = await Provider.FetchLatestQuestionsAsync();
+            QuestionsListView.ItemsSource = questions.Where(question => !question.IsDeleted);
+
+            LoaderProgressRing.HideProgressRing();
+        }
+
+        private async Task RefreshReplies()
+        {
+            LoaderThreadReplies.ShowProgressRing();
+
+            await Provider.FetchRepliesAsync(ActiveQuestion);
+            ThreadRepliesListView.ItemsSource = ActiveQuestion.Replies.Where(reply => !reply.IsDeleted).OrderByDescending(reply => reply.CreatedOn);
+
+            LoaderThreadReplies.HideProgressRing();
         }
 
         private async void OnRefreshButtonClickHandler(object sender, RoutedEventArgs args)
@@ -107,6 +154,7 @@ namespace PcPoradnaReaderWindowsUniversal
                 // Show question
                 ThreadQuestionTextBlock.Visibility = Visibility.Visible;
                 ThreadQuestionTextBlock.Text = ActiveQuestion.Text;
+                //ThreadQuestionTextBlock.Inlines.
 
                 // Hide info text block
                 ThreadSelectInfoTextBlock.Visibility = Visibility.Collapsed;
@@ -116,26 +164,6 @@ namespace PcPoradnaReaderWindowsUniversal
 
                 ThreadRepliesListView.Visibility = Visibility.Visible;
             }
-        }
-
-        private async void RefreshQuestions()
-        {
-            LoaderProgressRing.ShowProgressRing();
-
-            IReadOnlyList<Question> questions = await Provider.FetchLatestQuestionsAsync();
-            QuestionsListView.ItemsSource = questions.Where(question => !question.IsDeleted);
-
-            LoaderProgressRing.HideProgressRing();
-        }
-
-        private async Task RefreshReplies()
-        {
-            LoaderThreadReplies.ShowProgressRing();
-
-            await Provider.FetchRepliesAsync(ActiveQuestion);
-            ThreadRepliesListView.ItemsSource = ActiveQuestion.Replies.Where(reply => !reply.IsDeleted).OrderByDescending(reply => reply.CreatedOn);
-
-            LoaderThreadReplies.HideProgressRing();
         }
     }
 }

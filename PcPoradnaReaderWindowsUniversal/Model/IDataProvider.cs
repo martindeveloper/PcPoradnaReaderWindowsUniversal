@@ -11,5 +11,7 @@ namespace PcPoradnaReaderWindowsUniversal.Model
         Task<IReadOnlyList<Question>> FetchLatestQuestionsAsync();
 
         Task<IReadOnlyList<Reply>> FetchRepliesAsync(Question question);
+
+        void SetCategory(Categories.Category category);
     }
 }

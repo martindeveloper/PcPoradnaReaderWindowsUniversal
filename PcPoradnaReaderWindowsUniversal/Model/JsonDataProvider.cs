@@ -14,9 +14,16 @@ namespace PcPoradnaReaderWindowsUniversal.Model
     {
         private string Endpoint { get; }
 
+        private Categories.Category CurrentCategory;
+
         public JsonDataProvider (Uri endpoint)
         {
             Endpoint = endpoint.ToString();
+        }
+
+        public void SetCategory(Categories.Category category)
+        {
+            CurrentCategory = category;
         }
 
         private async Task<string> FetchUrl (string url)
@@ -38,15 +45,21 @@ namespace PcPoradnaReaderWindowsUniversal.Model
             return result;
         }
 
+        private void InsertAdditionalParameters(UriBuilder uriBuilder)
+        {
+            if(CurrentCategory != null && !(CurrentCategory is Categories.AllCategories))
+            {
+                uriBuilder.Query += CurrentCategory;
+            }
+        }
+
         public async Task<IReadOnlyList<Reply>> FetchRepliesAsync(Question question)
         {
             List<Reply> replies = new List<Reply>();
-
+            
             string result = await FetchUrl(question.RepliesApiUrl);
 
             JObject jsonObject = JObject.Parse(result);
-
-            //System.Diagnostics.Debugger.Break();
 
             foreach (JToken item in jsonObject["replies"])
             {
@@ -63,7 +76,11 @@ namespace PcPoradnaReaderWindowsUniversal.Model
         {
             List<Question> questions = new List<Question>();
 
-            string result = await FetchUrl(Endpoint);
+            UriBuilder uriBuilder = new UriBuilder(Endpoint);
+
+            InsertAdditionalParameters(uriBuilder);
+
+            string result = await FetchUrl(uriBuilder.ToString());
 
             // Fill collection
             JObject jsonObject = JObject.Parse(result);

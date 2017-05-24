@@ -1,4 +1,5 @@
 ﻿using System;
+using PcPoradnaReaderWindowsUniversal.Model.Users;
 
 namespace PcPoradnaReaderWindowsUniversal.Model.Replies
 {

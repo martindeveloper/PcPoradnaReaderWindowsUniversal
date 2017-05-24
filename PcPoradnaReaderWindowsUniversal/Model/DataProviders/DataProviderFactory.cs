@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PcPoradnaReaderWindowsUniversal.Model
+namespace PcPoradnaReaderWindowsUniversal.Model.DataProviders
 {
     class DataProviderFactory
     {
@@ -10,7 +10,7 @@ namespace PcPoradnaReaderWindowsUniversal.Model
 
             switch (type)
             {
-                case EndpointType.JSON:
+                case EndpointType.Json:
                     provider = new JsonDataProvider(new Uri(endpoint));
                     break;
 

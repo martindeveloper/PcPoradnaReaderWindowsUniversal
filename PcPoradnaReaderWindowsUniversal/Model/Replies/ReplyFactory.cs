@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
+using PcPoradnaReaderWindowsUniversal.Model.Users;
 using static PcPoradnaReaderWindowsUniversal.TypeHelper;
 
 namespace PcPoradnaReaderWindowsUniversal.Model.Replies

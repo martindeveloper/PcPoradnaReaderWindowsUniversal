@@ -12,6 +12,7 @@ using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using PcPoradnaReaderWindowsUniversal.Localization;
+using PcPoradnaReaderWindowsUniversal.Model.DataProviders;
 
 namespace PcPoradnaReaderWindowsUniversal
 {
@@ -133,19 +134,22 @@ namespace PcPoradnaReaderWindowsUniversal
         {
             Reply reply = args.ClickedItem as Reply;
 
-            if (reply != null)
+            if (reply == null)
             {
-                MessageDialog dialog = new MessageDialog(Localization.GetString("OpenInBrowserText"), Localization.GetString("OpenInBrowserHeadline"));
-
-                dialog.Commands.Add(new UICommand(Localization.GetString("Yes"), async (IUICommand target) =>
-                {
-                    await Launcher.LaunchUriAsync(reply.WebUrl);
-                }));
-
-                dialog.Commands.Add(new UICommand(Localization.GetString("Close")));
-
-                IUICommand command = await dialog.ShowAsync();
+                Console.WriteLine("MainPage.OnReplyClickHandler: Clicked item can not be casted to Reply class!");
+                return;
             }
+
+            MessageDialog dialog = new MessageDialog(Localization.GetString("OpenInBrowserText"), Localization.GetString("OpenInBrowserHeadline"));
+
+            dialog.Commands.Add(new UICommand(Localization.GetString("Yes"), async (IUICommand target) =>
+            {
+                await Launcher.LaunchUriAsync(reply.WebUrl);
+            }));
+
+            dialog.Commands.Add(new UICommand(Localization.GetString("Close")));
+
+            IUICommand command = await dialog.ShowAsync();
         }
 
         private async void OnQuestionClickHandler(object sender, ItemClickEventArgs args)
@@ -169,6 +173,13 @@ namespace PcPoradnaReaderWindowsUniversal
 
                 ThreadRepliesListView.Visibility = Visibility.Visible;
             }
+        }
+
+        private async void OnAboutButtonClickHandler(object sender, RoutedEventArgs e)
+        {
+            MessageDialog dialog = new MessageDialog(Localization.GetString("About/Text"), Localization.GetString("About/Title"));
+
+            await dialog.ShowAsync();
         }
     }
 }

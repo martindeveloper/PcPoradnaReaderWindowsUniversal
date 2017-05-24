@@ -1,13 +1,13 @@
-﻿using Newtonsoft.Json.Linq;
-using PcPoradnaReaderWindowsUniversal.Model.Questions;
-using PcPoradnaReaderWindowsUniversal.Model.Replies;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
+using PcPoradnaReaderWindowsUniversal.Model.Questions;
+using PcPoradnaReaderWindowsUniversal.Model.Replies;
 
-namespace PcPoradnaReaderWindowsUniversal.Model
+namespace PcPoradnaReaderWindowsUniversal.Model.DataProviders
 {
     class JsonDataProvider : IDataProvider
     {
@@ -27,7 +27,7 @@ namespace PcPoradnaReaderWindowsUniversal.Model
 
         private async Task<string> FetchUrl (string url)
         {
-            string result = "";
+            string result = string.Empty;
 
             using (HttpClient client = new HttpClient())
             using (HttpResponseMessage response = await client.GetAsync(url))

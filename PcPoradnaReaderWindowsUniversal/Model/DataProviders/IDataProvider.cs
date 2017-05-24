@@ -1,9 +1,9 @@
-﻿using PcPoradnaReaderWindowsUniversal.Model.Questions;
-using PcPoradnaReaderWindowsUniversal.Model.Replies;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using PcPoradnaReaderWindowsUniversal.Model.Questions;
+using PcPoradnaReaderWindowsUniversal.Model.Replies;
 
-namespace PcPoradnaReaderWindowsUniversal.Model
+namespace PcPoradnaReaderWindowsUniversal.Model.DataProviders
 {
     interface IDataProvider
     {

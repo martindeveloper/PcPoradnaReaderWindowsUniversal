@@ -1,4 +1,4 @@
-﻿namespace PcPoradnaReaderWindowsUniversal.Model
+﻿namespace PcPoradnaReaderWindowsUniversal.Model.Users
 {
     class User
     {

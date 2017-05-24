@@ -84,10 +84,7 @@
             <AppBarButton Label="Help" Icon="Help"/>
             
             <CommandBar.SecondaryCommands> 
-                <!-- TODO: Implement these buttons -->
-                <AppBarButton x:Uid="BottomBarLoginButton" Label="Login" /> 
-                <AppBarButton x:Uid="BottomBarLogoutButton" Label="Logout" />
-                <AppBarButton x:Uid="BottomBarAboutButton" Label="About"/>
+                <AppBarButton x:Uid="BottomBarAboutButton" Label="About" Click="OnAboutButtonClickHandler"/>
             </CommandBar.SecondaryCommands>
         </CommandBar>
     </Page.BottomAppBar>

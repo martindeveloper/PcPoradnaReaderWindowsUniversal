@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PcPoradnaReaderWindowsUniversal
+namespace PcPoradnaReaderWindowsUniversal.Model
 {
     class TypeHelper
     {

@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using PcPoradnaReaderWindowsUniversal.Model.Users;
-using static PcPoradnaReaderWindowsUniversal.TypeHelper;
+using static PcPoradnaReaderWindowsUniversal.Model.TypeHelper;
 
 namespace PcPoradnaReaderWindowsUniversal.Model.Questions
 {
@@ -10,8 +10,10 @@ namespace PcPoradnaReaderWindowsUniversal.Model.Questions
         {
             Question question = new Question();
 
-            foreach (JProperty property in item)
+            foreach (JToken jToken in item)
             {
+                JProperty property = (JProperty) jToken;
+
                 switch(property.Name)
                 {
                     case "id":

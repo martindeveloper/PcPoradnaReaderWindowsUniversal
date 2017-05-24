@@ -7,7 +7,7 @@ namespace PcPoradnaReaderWindowsUniversal.Model.Replies
     {
         public int Id { get; set; }
 
-        // TODO: Fill this property and build whote replies tree
+        // TODO: Fill this property and build whole replies tree
         public Reply Parent { get; set; }
 
         public Uri WebUrl { get; set; }

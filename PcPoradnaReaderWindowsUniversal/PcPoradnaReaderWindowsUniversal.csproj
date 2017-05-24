@@ -97,6 +97,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Config.cs" />
+    <Compile Include="Model\EndpointSubDomain.cs" />
     <Compile Include="Localization\LocalizationManager.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -117,9 +118,9 @@
     <Compile Include="Model\Replies\ReplyFactory.cs" />
     <Compile Include="Model\SubDomainsHelper.cs" />
     <Compile Include="Model\Users\User.cs" />
-    <Compile Include="PageExtensionMethods.cs" />
+    <Compile Include="ExtensionMethods\PageExtensionMethods.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TypeHelper.cs" />
+    <Compile Include="Model\TypeHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">

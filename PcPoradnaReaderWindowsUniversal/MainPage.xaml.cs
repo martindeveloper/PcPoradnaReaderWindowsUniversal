@@ -1,5 +1,4 @@
-﻿using PcPoradnaReaderWindowsUniversal.ExtensionMethods;
-using PcPoradnaReaderWindowsUniversal.Model;
+﻿using PcPoradnaReaderWindowsUniversal.Model;
 using PcPoradnaReaderWindowsUniversal.Model.Questions;
 using PcPoradnaReaderWindowsUniversal.Model.Replies;
 using System;
@@ -11,6 +10,7 @@ using Windows.System;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using PcPoradnaReaderWindowsUniversal.ExtensionMethods;
 using PcPoradnaReaderWindowsUniversal.Localization;
 using PcPoradnaReaderWindowsUniversal.Model.DataProviders;
 

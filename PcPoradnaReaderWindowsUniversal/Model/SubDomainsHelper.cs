@@ -15,20 +15,8 @@ namespace PcPoradnaReaderWindowsUniversal.Model
                     new EndpointSubDomain() { SubDomain = "ekonomicka", Title = "Ekonomická" }
                 };
 
-        public static IReadOnlyList<EndpointSubDomain> AvailableSubDomains
-        {
-            get
-            {
-                return new ReadOnlyCollection<EndpointSubDomain>(SubDomains);
-            }
-        }
+        public static IReadOnlyList<EndpointSubDomain> AvailableSubDomains => new ReadOnlyCollection<EndpointSubDomain>(SubDomains);
 
-        public static EndpointSubDomain DefaultSubDomain
-        {
-            get
-            {
-                return SubDomains[0];
-            }
-        }
+        public static EndpointSubDomain DefaultSubDomain => SubDomains[0];
     }
 }

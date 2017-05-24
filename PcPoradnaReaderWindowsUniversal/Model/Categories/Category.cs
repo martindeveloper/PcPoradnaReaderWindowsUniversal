@@ -1,22 +1,34 @@
-﻿namespace PcPoradnaReaderWindowsUniversal.Model.Categories
+﻿using PcPoradnaReaderWindowsUniversal.Localization;
+
+namespace PcPoradnaReaderWindowsUniversal.Model.Categories
 {
-    class Category
+    class Category : ITranslatable
     {
         public readonly uint Id;
 
-        public readonly string Name;
+        public readonly string LocalizationKey;
 
-        private string QueryString = "category";
+        private const string QueryString = "category";
 
-        public Category(uint Id, string Name)
+        public Category(uint id, string localizationKey)
         {
-            this.Id = Id;
-            this.Name = Name;
+            Id = id;
+            LocalizationKey = localizationKey;
         }
 
         public override string ToString()
         {
             return $"{QueryString}={Id}";
+        }
+
+        public string GetLocalizationNamespace()
+        {
+            return "Category";
+        }
+
+        public string GetLocalizationKey()
+        {
+            return LocalizationKey;
         }
     }
 }

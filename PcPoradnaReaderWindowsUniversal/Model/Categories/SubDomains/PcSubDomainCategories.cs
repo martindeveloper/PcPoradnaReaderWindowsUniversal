@@ -6,21 +6,22 @@ namespace PcPoradnaReaderWindowsUniversal.Model.Categories.SubDomains
     {
         public IList<Category> ToList()
         {
+            // NOTE: Maybe make some PcCategory which will insert PC. prefix to the namespace
             List<Category> categories = new List<Category>
             {
                 new AllCategories(),
-                new Category(5, "Hardware"),
-                new Category(6, "Periferie"),
-                new Category(7, "Multimedia"),
-                new Category(8, "Software"),
-                new Category(9, "Programování"),
-                new Category(13, "Internet"),
-                new Category(10, "Operační systémy"),
-                new Category(15, "PC sestavy"),
-                new Category(4, "Ostatní"),
-                new Category(14, "Mobily a tablety"),
-                new Category(2, "Připomínky"),
-                new Category(3, "Pokec")
+                new Category(5, "PC/Hardware"),
+                new Category(6, "PC/Periphery"),
+                new Category(7, "PC/Multimedia"),
+                new Category(8, "PC/Software"),
+                new Category(9, "PC/Programming"),
+                new Category(13, "PC/Internet"),
+                new Category(10, "PC/OS"),
+                new Category(15, "PC/Systems"),
+                new Category(4, "PC/Others"),
+                new Category(14, "PC/Mobile"),
+                new Category(2, "PC/Comments"),
+                new Category(3, "PC/Chat")
             };
 
             return categories;

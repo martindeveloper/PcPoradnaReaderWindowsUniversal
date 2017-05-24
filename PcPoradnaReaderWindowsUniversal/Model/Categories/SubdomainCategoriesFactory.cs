@@ -6,7 +6,7 @@
         {
             ISubDomainCategories categories;
 
-            switch (subdomain.SubDomain)
+            switch (subdomain.SubDomain.ToLower())
             {
                 case "pc":
                     categories = new SubDomains.PcSubDomainCategories();

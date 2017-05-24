@@ -132,6 +132,45 @@
   <data name="BottomBarLogoutButton.Label" xml:space="preserve">
     <value>Logout</value>
   </data>
+  <data name="Category.Neutral.All" xml:space="preserve">
+    <value>All Categories</value>
+  </data>
+  <data name="Category.PC.Chat" xml:space="preserve">
+    <value>Chat</value>
+  </data>
+  <data name="Category.PC.Comments" xml:space="preserve">
+    <value>Comments</value>
+  </data>
+  <data name="Category.PC.Hardware" xml:space="preserve">
+    <value>Hardware</value>
+  </data>
+  <data name="Category.PC.Internet" xml:space="preserve">
+    <value>Internet</value>
+  </data>
+  <data name="Category.PC.Mobile" xml:space="preserve">
+    <value>Mobile</value>
+  </data>
+  <data name="Category.PC.Multimedia" xml:space="preserve">
+    <value>Multimedia</value>
+  </data>
+  <data name="Category.PC.OS" xml:space="preserve">
+    <value>Operating Systems</value>
+  </data>
+  <data name="Category.PC.Others" xml:space="preserve">
+    <value>Others</value>
+  </data>
+  <data name="Category.PC.Periphery" xml:space="preserve">
+    <value>Periphery</value>
+  </data>
+  <data name="Category.PC.Programming" xml:space="preserve">
+    <value>Programming</value>
+  </data>
+  <data name="Category.PC.Software" xml:space="preserve">
+    <value>Software</value>
+  </data>
+  <data name="Category.PC.Systems" xml:space="preserve">
+    <value>PC Systems</value>
+  </data>
   <data name="ChangeSubDomainHeader" xml:space="preserve">
     <value>Change subdomain</value>
   </data>

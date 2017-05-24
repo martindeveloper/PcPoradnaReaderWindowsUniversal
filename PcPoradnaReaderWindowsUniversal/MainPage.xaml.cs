@@ -11,6 +11,7 @@ using Windows.System;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using PcPoradnaReaderWindowsUniversal.Localization;
 
 namespace PcPoradnaReaderWindowsUniversal
 {
@@ -23,14 +24,16 @@ namespace PcPoradnaReaderWindowsUniversal
     {
         private IDataProvider Provider;
         private Question ActiveQuestion;
-        private ResourceLoader Resource;
+        private readonly LocalizationManager Localization;
         private Model.Categories.ISubDomainCategories AvailableCategories;
 
         public MainPage()
         {
             InitializeComponent();
 
-            Resource = new ResourceLoader();
+            ResourceLoader mainResource = new ResourceLoader();
+            Localization = new LocalizationManager(mainResource);
+
             Provider = DataProviderFactory.CreateDataProvider(Config.ApiType, Config.LatestQuestionsEndpoint);
 
             ChangeSubDomain(Config.ActiveSubDomain);
@@ -47,10 +50,10 @@ namespace PcPoradnaReaderWindowsUniversal
             {
                 Model.Categories.Category scopedCategory = category;
 
-                MenuFlyoutItem item = new MenuFlyoutItem() { Text = scopedCategory.Name };
+                MenuFlyoutItem item = new MenuFlyoutItem() { Text = Localization.Translate(scopedCategory) };
                 item.Click += (object sender, RoutedEventArgs args) => { ChangeCategory(scopedCategory); };
 
-                CategoriesMenuFlyout.Items.Add(item);
+                CategoriesMenuFlyout.Items?.Add(item);
             }
         }
 
@@ -63,7 +66,7 @@ namespace PcPoradnaReaderWindowsUniversal
                 MenuFlyoutItem item = new MenuFlyoutItem() { Text = subdomain.Title };
                 item.Click += (object sender, RoutedEventArgs args) => { ChangeSubDomain(scopedSubdomain); };
 
-                SubDomainMenuFlyout.Items.Add(item);
+                SubDomainMenuFlyout.Items?.Add(item);
             }
         }
 
@@ -132,14 +135,14 @@ namespace PcPoradnaReaderWindowsUniversal
 
             if (reply != null)
             {
-                MessageDialog dialog = new MessageDialog(Resource.GetString("OpenInBrowserText"), Resource.GetString("OpenInBrowserHeadline"));
+                MessageDialog dialog = new MessageDialog(Localization.GetString("OpenInBrowserText"), Localization.GetString("OpenInBrowserHeadline"));
 
-                dialog.Commands.Add(new UICommand(Resource.GetString("Yes"), async (IUICommand target) =>
+                dialog.Commands.Add(new UICommand(Localization.GetString("Yes"), async (IUICommand target) =>
                 {
                     await Launcher.LaunchUriAsync(reply.WebUrl);
                 }));
 
-                dialog.Commands.Add(new UICommand(Resource.GetString("Close")));
+                dialog.Commands.Add(new UICommand(Localization.GetString("Close")));
 
                 IUICommand command = await dialog.ShowAsync();
             }

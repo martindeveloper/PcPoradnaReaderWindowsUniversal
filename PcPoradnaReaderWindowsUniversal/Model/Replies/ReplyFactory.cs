@@ -10,8 +10,10 @@ namespace PcPoradnaReaderWindowsUniversal.Model.Replies
         {
             Reply reply = new Reply();
 
-            foreach(JProperty property in item)
+            foreach(JToken jToken in item)
             {
+                JProperty property = (JProperty) jToken;
+
                 switch (property.Name)
                 {
                     case "id":
@@ -44,6 +46,9 @@ namespace PcPoradnaReaderWindowsUniversal.Model.Replies
                         long.TryParse(property.Value.ToString(), out created);
 
                         reply.CreatedOn = CreateDateTimeFromTicksEpoch(created);
+                        break;
+                    default:
+
                         break;
                 }
             }

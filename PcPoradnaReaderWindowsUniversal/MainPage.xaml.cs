@@ -1,14 +1,16 @@
-﻿using System;
+﻿using PcPoradnaReaderWindowsUniversal.ExtensionMethods;
+using PcPoradnaReaderWindowsUniversal.Model;
+using PcPoradnaReaderWindowsUniversal.Model.Questions;
+using PcPoradnaReaderWindowsUniversal.Model.Replies;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using Windows.ApplicationModel.Resources;
+using Windows.System;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using PcPoradnaReaderWindowsUniversal.Model;
-using Windows.UI.Popups;
-using Windows.System;
-using Windows.ApplicationModel.Resources;
-using System.Threading.Tasks;
-using PcPoradnaReaderWindowsUniversal.ExtensionMethods;
 
 namespace PcPoradnaReaderWindowsUniversal
 {
@@ -34,10 +36,10 @@ namespace PcPoradnaReaderWindowsUniversal
             ChangeSubDomain(Config.ActiveSubDomain);
 
             FillSubDomainsMenuFlyout(SubDomainsHelper.AvailableSubDomains);
-            FillCategoriesMenuFlyout(Config.ActiveSubDomain);
+            FillCategoriesMenuFlyout();
         }
 
-        private void FillCategoriesMenuFlyout(EndpointSubDomain subdomain)
+        private void FillCategoriesMenuFlyout()
         {
             IList<Model.Categories.Category> categories = AvailableCategories.ToList();
 

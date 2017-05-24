@@ -1,7 +1,6 @@
-﻿using System;
+﻿using PcPoradnaReaderWindowsUniversal.Model.Questions;
+using PcPoradnaReaderWindowsUniversal.Model.Replies;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace PcPoradnaReaderWindowsUniversal.Model

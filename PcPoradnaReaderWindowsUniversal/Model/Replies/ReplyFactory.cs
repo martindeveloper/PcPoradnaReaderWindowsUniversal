@@ -1,12 +1,8 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static PcPoradnaReaderWindowsUniversal.TypeHelper;
 
-namespace PcPoradnaReaderWindowsUniversal.Model
+namespace PcPoradnaReaderWindowsUniversal.Model.Replies
 {
     class ReplyFactory
     {

@@ -111,8 +111,8 @@
     <Compile Include="Model\JsonDataProvider.cs" />
     <Compile Include="Model\Questions\Question.cs" />
     <Compile Include="Model\Questions\QuestionFactory.cs" />
-    <Compile Include="Model\Reply.cs" />
-    <Compile Include="Model\ReplyFactory.cs" />
+    <Compile Include="Model\Replies\Reply.cs" />
+    <Compile Include="Model\Replies\ReplyFactory.cs" />
     <Compile Include="Model\SubDomainsHelper.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="PageExtensionMethods.cs" />
